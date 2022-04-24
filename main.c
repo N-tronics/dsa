@@ -8,7 +8,7 @@
 #include "heap.h"
 #include "sort.h"
 
-#define SIZE 1000
+#define SIZE 10000
 #define MAX  1000
 
 int prnt = 0;
@@ -108,6 +108,17 @@ int main(int argc, char **argv) {
     if (prnt)
         fprintf(file, "FREQUENCY SORT:\n");
     printf("\033[32mFrequency sort [%lf s]\033[m\n", elapsed);
+    printArr(sortArr);
+
+    memcpy(sortArr, origArr, SIZE * sizeof(int));
+    cpuTime = clock();
+    countingSort(sortArr, SIZE);
+    cpuTime = clock() - cpuTime;
+    elapsed = (double)(cpuTime) / CLOCKS_PER_SEC;
+    if (prnt)
+        fprintf(file, "COUNTING SORT:\n");
+    printf("\033[32mCounting sort [%lf s]\033[m\n", elapsed);
+    printf("printing counting sort\n");
     printArr(sortArr);
 
     if (prnt)

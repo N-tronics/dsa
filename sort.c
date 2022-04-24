@@ -6,7 +6,8 @@
 #include "sort.h"
 #include "utils.h"
 
-/* BUBBLESORT(arr, size):
+/* O(n^2)
+ * BUBBLESORT(arr, size):
  *     noSwap = false
  *     while (not noSwap):
  *         noSwap = true
@@ -29,7 +30,8 @@ void bubbleSort(int *arr, size_t size) {
     }
 }
 
-/* SELECTIONSORT(arr, size):
+/* O(n^2)
+ * SELECTIONSORT(arr, size):
  *     for i = 0; i < size - 1; i += 1:
  *         min = i
  *         for j = i + 1; j < size - 1; j += 1:
@@ -48,7 +50,8 @@ void selectionSort(int *arr, size_t size) {
     }
 }
 
-/* INSERTIONSORT(arr, size):
+/* O(n^2)
+ * INSERTIONSORT(arr, size):
  *     for i = 1; i < size; i += 1:
  *         key = arr[i]
  *         for j = i - 1; j >= 0 and key < arr[j] j -= 1:
@@ -66,7 +69,7 @@ void insertionSort(int *arr, size_t size) {
     }
 }
 
-/*
+/* O(n log n)
  * MERGE(arr, p, q, r):
  *     n1 = len(arr[p..q])
  *     n2 = len(arr[q+1..r])
@@ -140,7 +143,7 @@ void mergeSort(int *arr, size_t size) {
     __mergeSort__(arr, 0, size - 1);
 }
 
-/*
+/* O(n^2)
  * partition(array, leftmostIndex, rightmostIndex)
  *   set rightmostIndex as pivotIndex
  *   storeIndex <- leftmostIndex - 1
@@ -209,4 +212,26 @@ void frequencySort(int *arr, size_t size) {
             freq[j]--;
         }
     }
+    free(freq);
+}
+
+void countingSort(int *arr, size_t size) {
+    int *origArr = calloc(size, sizeof(int));
+    memcpy(origArr, arr, sizeof(int) * size);
+    int mx = *arr, *i;
+    for (i = arr + 1; i < arr + size; i++)
+        if (*i > mx)
+            mx = *i;
+    int *count = calloc(mx + 1, sizeof(int));
+    for (i = arr; i < arr + size; i++)
+        count[*i]++;
+    for (i = count + 1; i < count + mx + 1; i++)
+        *i += *(i - 1);
+    for (i = origArr; i < origArr + size; i++) {
+        arr[count[*i] - 1] = *i;
+        count[*i]--;
+    }
+
+    free(origArr);
+    free(count);
 }

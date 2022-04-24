@@ -9,5 +9,6 @@
     void mergeSort(int *arr, size_t size);
     void quickSort(int *arr, size_t size);
     void frequencySort(int *arr, size_t size);
+    void countingSort(int *arr, size_t size);
 
 #endif // _BUBBLE_SORT_H
